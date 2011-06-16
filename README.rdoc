@@ -1,6 +1,92 @@
 = vim-bundler
 
-Description goes here.
+This gem provides a simple way to manage your vim bundles (aka plugins).
+If you are familiar with ruby gem bundler - you are familar with vim-bundler.
+
+== Requirements
+
+git
+
+== Quick start
+
+Switch to your vimfiles directory (e.g +~/.vim+)
+Initialize +vim_bundles+ config file 
+
+  vbundle init
+
+Put some lines in your +vim_bundles+ config file. For example:
+
+  bundle 'snipmate', :git => 'git://github.com/msanders/snipmate.vim.git'
+  bundle 'nerdtree', :git => 'git://github.com/scrooloose/nerdtree.git'
+
+Perform install action 
+
+  vbundle install 
+
+All you bundles will appear in +bundle+ dir.
+
+After that you can clean your vimfiles directory from stale plugins
+
+== Using different bundle sources
+
+You can use use git sources as shown above and also it is possible to load scripts from www.vim.org
+It can be done as following:
+
+  bundle 'indexed-search', :vim_script_id => 7062
+
+value of +vim_script_id+ can be found in download link. You also need to point location if
+the script originally requires another location than +plugin+ 
+
+== Updating bundles
+
+It is quite easy
+
+  vbundle update
+
+Also you can update a specific plugin
+
+  vbundle update snipmate
+
+== Cleaning bundles
+
+It is also easy enough
+
+  vbundle clean
+
+So you can clean a specific plugin
+
+  vbundle clean snipmate
+
+As you can see, every command might be proceeded for specific plugin (except +init+)
+
+== Managing bundles using git modules
+
+It might be useful to attach plugins as git modules (for example if you keep your vimfiles at github.com), to do so put this line in your +vim_bundles+
+
+  use_git_submodules true
+
+== Defining post actions
+
+Sometimes it is usefull to do some actions after bundle installing or updating 
+
+  bundle 'command-t', :git => 'git://github.com/vim-scripts/Command-T' do
+    `rvm use system && cd ruby/command-t && /usr/bin/ruby extconf.rb && make clean && make && cd - && rvm use default`
+  end
+
+== Configuration options
+
+There are some options that you can define in +vim_bundles+ file
+
+  use_git_submodules (default: false)
+  git_bin (default: 'git')
+  vimrc_file (default: 'vimrc')
+  vim_bin_path (default: '/usr/bin/vim')
+  bundles_dir (default: 'bundle')
+
+== Example
+
+My +vim_bundles+ located here
+https://github.com/vintikzzz/my-vim-files/blob/master/vim_bundles
 
 == Contributing to vim-bundler
  
