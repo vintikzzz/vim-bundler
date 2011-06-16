@@ -37,7 +37,8 @@ If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
     "lib/vim-bundler/ui.rb",
     "lib/vim-bundler/vim_org.rb",
     "test/helper.rb",
-    "test/test_vim-bundler.rb"
+    "test/test_vim-bundler.rb",
+    "vim-bundler.gemspec"
   ]
   s.homepage = %q{http://github.com/vintikzzz/vim-bundler}
   s.licenses = ["MIT"]
