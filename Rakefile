@@ -17,8 +17,9 @@ Jeweler::Tasks.new do |gem|
   gem.name = "vim-bundler"
   gem.homepage = "http://github.com/vintikzzz/vim-bundler"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Bundler for vim}
+  gem.description = %Q{This gem provides a simple way to manage your vim bundles (aka plugins).
+If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
   gem.email = "fazzzenda@mail.ru"
   gem.authors = ["Pavel Tatarsky"]
   # dependencies defined in Gemfile
