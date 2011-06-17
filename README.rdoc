@@ -59,6 +59,10 @@ So you can clean a specific plugin
 
 As you can see, every command might be proceeded for specific plugin (except +init+)
 
+== Listing bundles
+
+  vbundle list
+
 == Managing bundles using git modules
 
 It might be useful to attach plugins as git modules (for example if you keep your vimfiles at github.com), to do so put this line in your +vim_bundles+

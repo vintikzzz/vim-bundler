@@ -49,6 +49,11 @@ module VimBundler
     private
     def definition
       file = File.join(FileUtils.pwd, VimBundler.default_bundles_file)
+      unless File.exists? file
+        VimBundler.ui.error "vim_bundles file not exists"
+        VimBundler.ui.error "perform init"
+        exit
+      end
       @definition ||= VimBundler::DSL.eval(file).to_definition
     end
     def prepend_line(file, str)
