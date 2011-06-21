@@ -37,6 +37,10 @@ It can be done as following:
 value of +vim_script_id+ can be found in download link. You also need to point location if
 the script originally requires another location than +plugin+ 
 
+Also you can link local folders as bundles
+
+  bundle 'snipmate', :local => '~/projects/snipmate'
+
 == Updating bundles
 
 It is quite easy
