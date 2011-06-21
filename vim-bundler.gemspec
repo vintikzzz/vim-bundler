@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vim-bundler}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Pavel Tatarsky"]
-  s.date = %q{2011-06-17}
+  s.date = %q{2011-06-22}
   s.default_executable = %q{vbundle}
   s.description = %q{This gem provides a simple way to manage your vim bundles (aka plugins).
 If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
@@ -34,6 +34,7 @@ If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
     "lib/vim-bundler/dsl.rb",
     "lib/vim-bundler/git.rb",
     "lib/vim-bundler/installer.rb",
+    "lib/vim-bundler/local.rb",
     "lib/vim-bundler/ui.rb",
     "lib/vim-bundler/vim_org.rb",
     "test/helper.rb",
