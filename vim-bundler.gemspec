@@ -5,16 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{vim-bundler}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Pavel Tatarsky"]
-  s.date = %q{2011-06-22}
-  s.default_executable = %q{vbundle}
+  s.authors = [%q{Pavel Tatarsky}]
+  s.date = %q{2012-04-12}
   s.description = %q{This gem provides a simple way to manage your vim bundles (aka plugins).
 If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
   s.email = %q{fazzzenda@mail.ru}
-  s.executables = ["vbundle"]
+  s.executables = [%q{vbundle}]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -42,9 +41,9 @@ If you are familiar with ruby gem bundler - you are familar with vim-bundler.}
     "vim-bundler.gemspec"
   ]
   s.homepage = %q{http://github.com/vintikzzz/vim-bundler}
-  s.licenses = ["MIT"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.licenses = [%q{MIT}]
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.6}
   s.summary = %q{Bundler for vim}
 
   if s.respond_to? :specification_version then
