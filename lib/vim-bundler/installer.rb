@@ -27,7 +27,12 @@ module VimBundler
       installer = new(definitions[:opts])
       installer.run_callbacks(:all) do
         unless name.nil?
-          process(installer, type, definitions[:bundles][name])
+          bundle = definitions[:bundles][name]
+          if(bundle.nil?)
+            VimBundler.ui.warn "bundle #{name} not exists"
+          else
+            process(installer, type, definitions[:bundles][name])
+          end
         else
           definitions[:bundles].each do |k, v|
             process(installer, type, v)
