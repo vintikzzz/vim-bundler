@@ -1,0 +1,16 @@
+# A sample Guardfile
+# More info at https://github.com/guard/guard#readme
+
+guard 'spork', :cucumber_env => { 'RACK_ENV' => 'cucumber' }, :rspec_env => { 'RACK_ENV' => 'rspec' } do
+  watch('config/boot.rb')
+  watch('config/config.rb')
+  watch('spec/spec_helper.rb')
+  watch('Gemfile')
+  watch('Gemfile.lock')
+  watch('features/support/env.rb')
+end
+guard 'rspec' do
+  watch('spec/spec_helper.rb')                        { "spec" }
+  watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^spec/(.+)_spec\.rb$})                     { |m| "spec/lib/#{m[1]}_spec.rb" }
+end

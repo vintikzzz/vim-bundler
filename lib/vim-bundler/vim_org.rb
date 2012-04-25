@@ -6,14 +6,9 @@ module VimBundler
     module Installer
       extend ActiveSupport::Concern
       include VimBundler::Actions
-      def vim_org_install(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        if Dir.exists?(dir)
-          VimBundler.ui.info "#{bundle.name} already installed" 
-          return
-        end
-        FileUtils.mkdir_p(dir)
-        f = open("http://www.vim.org/scripts/download_script.php?src_id=#{bundle.vim_script_id}")
+      def vim_org_install
+        FileUtils.mkdir_p(@dir)
+        f = open("http://www.vim.org/scripts/download_script.php?src_id=#{@bundle.vim_script_id}")
         local_file = f.meta["content-disposition"].gsub(/attachment; filename=/,"")
 
         # if local_file.end_with? 'tar.gz'
@@ -23,20 +18,19 @@ module VimBundler
           # `tar xvfz #{data.path}`
         # end
         if local_file.end_with? 'vim'
-          as = bundle.respond_to?(:as) ? bundle.as.to_s : 'plugin'
-          FileUtils.mkdir_p(File.join(dir, as))
-          data = open(File.join(dir, as, local_file), 'w')
+          as = @bundle.respond_to?(:as) ? @bundle.as.to_s : 'plugin'
+          FileUtils.mkdir_p(File.join(@dir, as))
+          data = open(File.join(@dir, as, local_file), 'w')
           data.write f.read
           data.close
         end
-        VimBundler.ui.info "#{bundle.name} installed"
       end
-      def vim_org_update(bundle)
-        clean(bundle)
-        vim_org_install(bundle)
+      def vim_org_update
+        clean
+        vim_org_install
       end
-      def vim_org_clean(bundle)
-        clean(bundle)
+      def vim_org_clean
+        clean
       end
     end
     module DSL

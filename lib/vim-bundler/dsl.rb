@@ -34,6 +34,10 @@ module VimBundler
       bundle = OpenStruct.new(args[1])
       bundle.name = args[0]
       bundle.block = block
+      opts = @opts
+      bundle.define_singleton_method :opts do
+        opts
+      end
       self.class.handlers.each do |k, v|
         if v.call(bundle)
           bundle.type = k

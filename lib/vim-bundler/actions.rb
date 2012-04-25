@@ -1,20 +1,18 @@
 module VimBundler
   module Actions
-    def clean(bundle)
-      dir = File.join(@opts[:bundles_dir], bundle.name)
-      if Dir.exists?(dir)
-        FileUtils.rm_rf(dir)
-        VimBundler.ui.info "#{bundle.name} removed"
+    def clean
+      if Dir.exists?(@dir)
+        FileUtils.rm_rf(@dir)
       else
-        VimBundler.ui.warn "#{bundle.name} not found"
+        raise "not found"
       end
     end
-    def post_action(dir, bundle)
-      return true if bundle.block.nil?
+    def post_action
+      return true if @bundle.block.nil?
       cur_dir = FileUtils.pwd
-      FileUtils.cd(dir)
+      FileUtils.cd(@dir)
       begin
-        bundle.block.call
+        @bundle.block.call
       rescue
         FileUtils.cd(cur_dir)
         return false

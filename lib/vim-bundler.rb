@@ -1,4 +1,5 @@
 module VimBundler
+  autoload :CLI, 'vim-bundler/cli'
   autoload :DSL, 'vim-bundler/dsl'
   autoload :Installer, 'vim-bundler/installer'
   autoload :Git, 'vim-bundler/git'
@@ -6,6 +7,7 @@ module VimBundler
   autoload :Local, 'vim-bundler/local'
   autoload :UI, 'vim-bundler/ui'
   autoload :Actions, 'vim-bundler/actions'
+  autoload :Lock, 'vim-bundler/lock'
 
   class << self
     attr_accessor :ui
@@ -16,4 +18,5 @@ module VimBundler
   include Git
   include VimOrg
   include Local
+  include Lock
 end

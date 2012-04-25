@@ -44,9 +44,13 @@ module VimBundler
     end
     desc 'list', 'List all installed bundles'
     def list
-      definition[:bundles].each { |k, v| puts k }
+      definition[:bundles].each_value { |bundle| VimBundler.ui.info prepare_name(bundle) }
     end
+    default_task :install
     private
+    def prepare_name(bundle)
+      bundle.name
+    end
     def definition
       file = File.join(FileUtils.pwd, VimBundler.default_bundles_file)
       unless File.exists? file

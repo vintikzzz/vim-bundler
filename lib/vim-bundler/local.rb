@@ -5,39 +5,15 @@ module VimBundler
     module Installer
       extend ActiveSupport::Concern
       include VimBundler::Actions
-      def local_install(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        if Dir.exists?(dir)
-          VimBundler.ui.info "#{bundle.name} already installed" 
-          return
-        end
-        `ln -s #{bundle.local} #{dir}`
-        if $?.to_i == 0 && post_action(dir, bundle)
-          VimBundler.ui.info "#{bundle.name} installed"
-        else
-          VimBundler.ui.warn "#{bundle.name} not installed"
-        end
+      def local_install
+        `ln -s #{@bundle.local} #{@dir}`
+        raise "unable to make symlink" unless $?.to_i == 0
       end
-      def local_update(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        unless Dir.exists?(dir)
-          VimBundler.ui.warn "#{bundle.name} not found" 
-          return
-        end
-        if post_action(dir, bundle)
-          VimBundler.ui.info "#{bundle.name} updated"
-        else
-          VimBundler.ui.warn "#{bundle.name} not updated"
-        end
+      def local_update
       end
-      def local_clean(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        if Dir.exists?(dir)
-          `unlink #{dir}`
-          VimBundler.ui.info "#{bundle.name} removed"
-        else
-          VimBundler.ui.warn "#{bundle.name} not found"
-        end
+      def local_clean
+        `unlink #{@dir}`
+        raise "unable to make unlink" unless $?.to_i == 0
       end
     end
     module DSL

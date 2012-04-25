@@ -5,54 +5,41 @@ module VimBundler
     module Installer
       extend ActiveSupport::Concern
       include VimBundler::Actions
-      def git_install(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        if Dir.exists?(dir)
-          VimBundler.ui.info "#{bundle.name} already installed" 
-          return
-        end
-        if @opts[:use_git_submodules]
-          `#{@opts[:git_bin]} submodule add #{bundle.git} #{dir} 2>&1`
+      def git_install
+        if @bundle.opts[:use_git_submodules]
+          `#{@opts[:git_bin]} submodule add #{@bundle.git} #{@dir} 2>&1`
+          raise "unable to add submodule" unless $?.to_i == 0
         else
-          `#{@opts[:git_bin]} clone #{bundle.git} #{dir} 2>&1`
-        end
-        if $?.to_i == 0 && post_action(dir, bundle)
-          VimBundler.ui.info "#{bundle.name} installed"
-        else
-          VimBundler.ui.warn "#{bundle.name} not installed"
+          `#{@bundle.opts[:git_bin]} clone #{@bundle.git} #{@dir} 2>&1`
+          raise "unable to clone" unless $?.to_i == 0
         end
       end
-      def git_update(bundle)
-        dir = File.join(@opts[:bundles_dir], bundle.name)
-        unless Dir.exists?(dir)
-          VimBundler.ui.warn "#{bundle.name} not found" 
-          return
-        end
-        `cd #{dir} && #{@opts[:git_bin]} pull #{bundle.git} 2>&1 && cd - `
-        if $?.to_i == 0 && post_action(dir, bundle)
-          VimBundler.ui.info "#{bundle.name} updated"
-        else
-          VimBundler.ui.warn "#{bundle.name} not updated"
-        end
+      def git_update
+        `cd #{@dir} && #{@bundle.opts[:git_bin]} pull #{@bundle.git} 2>&1 && cd - `
+        raise "unable to pull" unless $?.to_i == 0
       end
-      def git_clean(bundle)
-        clean(bundle)
-        if @opts[:use_git_submodules]
-          clean_config_file('.gitmodules', bundle)
-          clean_config_file('.git/config', bundle)
-          lines = File.readlines('.gitmodules')
-          dir = File.join(@opts[:bundles_dir], bundle.name)
-          `#{@opts[:git_bin]} rm --cached #{dir}`
+      def git_clean
+        begin
+          clean
+        rescue StandardError => e
+          raise e
+        ensure
+          if @bundle.opts[:git_bin]
+            clean_config_file('.gitmodules')
+            clean_config_file('.git/config')
+            lines = File.readlines('.gitmodules')
+            `#{@bundle.opts[:git_bin]} rm --cached #{@dir}`
+          end
         end
       end
       private
-      def clean_config_file(path, bundle)
+      def clean_config_file(path)
         temp = []
         delete = false
         file = File.open(path, 'r') do |f|
           while (line = f.gets)
             delete = false if line.include?('[submodule')
-            delete = true if line.include?(bundle.name) && line.include?('[submodule')
+            delete = true if line.include?(@bundle.name) && line.include?('[submodule')
             temp << line unless delete
           end
         end
