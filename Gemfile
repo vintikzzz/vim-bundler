@@ -10,6 +10,7 @@ gem 'awesome_print'
 group :development do
   gem "bundler"
   gem "jeweler"
+  gem "rcov"
 end
 group :rspec, :cucumber do
   gem 'rspec'
