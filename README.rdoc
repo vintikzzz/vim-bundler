@@ -73,14 +73,6 @@ It might be useful to attach plugins as git modules (for example if you keep you
 
   use_git_submodules true
 
-== Defining post actions
-
-Sometimes it is usefull to do some actions after bundle installing or updating 
-
-  bundle 'command-t', :git => 'git://github.com/vim-scripts/Command-T' do
-    `rvm use system && cd ruby/command-t && /usr/bin/ruby extconf.rb && make clean && make && cd - && rvm use default`
-  end
-
 == Configuration options
 
 There are some options that you can define in +vim_bundles+ file
